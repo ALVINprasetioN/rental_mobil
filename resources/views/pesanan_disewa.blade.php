@@ -63,7 +63,7 @@ $processedIds = array();
                                 <h5 class="card-title" >{{$sewaaa->merek}}</h5>
                                 <p class="card-title">warna : {{$sewaaa->warna}}</p>
                                 <p class="card-title">tanggal sewa : {{$sewaaas->tanggal}}</p>
-                                <p class="card-title">tanggal pengembalian : {{$sewaaas->tanggal_end}}</p>
+                                <p class="card-title">tanggal pengembalians : {{$sewaaas->tanggal_end}}</p>
                             </div>
                             <div class="flex terima">
                                 <form action="{{route('kembalikan_disewa')}}" method="post">
