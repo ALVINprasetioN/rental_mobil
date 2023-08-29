@@ -21,7 +21,7 @@
     <nav class="navbar-expand-md navbar-light navbar navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-            Rental mobil
+            Echo trans
             </a>
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">
@@ -52,7 +52,7 @@
                                     {{ __('Create mobil') }}
                                 </a>
 
-                                <form id="create_mobil1" action="{{ route('create_mobil') }}" method="POST" class="d-none">
+                                <form id="create_mobil1" action="{{ route('create_mobil') }}" method="get" class="d-none">
                                     @csrf
                                 </form>
                                     @endif

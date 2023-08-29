@@ -18,5 +18,17 @@ class Denda extends Model
         'sewa_id',
         'tot_denda',
     ];
+    public function users()
+    {
+        return $this->belongsto(Users::class);
+    }
+    public function sewa()
+    {
+        return $this->belongsto(Sewa::class);
+    }
+    public function mobil()
+    {
+        return $this->belongsto(Mobil::class);
+    }
 
 }

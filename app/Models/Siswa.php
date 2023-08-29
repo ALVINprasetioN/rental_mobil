@@ -21,7 +21,7 @@ class Siswa extends Model
         return $this->belongsTo(Guru::class);
     }
     public function mobil()
-    {
+    {   
         return $this->belongsToMany(Mobil::class);
     }
 }

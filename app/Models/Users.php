@@ -10,15 +10,15 @@ class Users extends Model
     protected $table = 'users';
     public function mobil()
     {
-        return $this->belongsToMany(Mobil::class, 'sewa'); 
+        return $this->belongsToMany(Mobil::class,'sewa'); 
     }
-    public function mobils()
-    {
-        return $this->hasOne(Mobil::class); 
-    }
+
     public function sewa()
     {
         return $this->hasMany(Sewa::class); 
     }
-
+    public function denda()
+    {
+        return $this->hasMany(Denda::class); 
+    }
 }

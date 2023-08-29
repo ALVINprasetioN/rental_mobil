@@ -8,8 +8,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
@@ -21,7 +19,7 @@
     <nav class="navbar-expand-md navbar-light navbar navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-            Rental mobil
+            Echo trans
             </a>
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">
@@ -37,6 +35,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
+
                             @endif
                             @else
                             <form class="d-flex" style="margin-right:20vh;">
@@ -68,6 +67,7 @@
                                 <form id="admin_sewa1" action="{{ route('admin_sewa') }}" method="GET" class="d-none">
                                     @csrf
                                 </form>
+           
                                     @endif
 
                                 <a class="dropdown-item" href="{{ route('pesanan_waiting') }}"

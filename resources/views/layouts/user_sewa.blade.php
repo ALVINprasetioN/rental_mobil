@@ -47,10 +47,14 @@
                 </form>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="denda" type="button" role="tab" aria-selected="false">Denda</button>
+                <form action="{{route('pesanan_denda')}}" method="get" >
+                  <button class="nav-link {{Session::get('didenda')}} rounded-5" id="dikembalikan" data-bs-toggle="tab" type="submit" role="tab" aria-selected="false">Didenda</button>
+                </form>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="selesai" type="button" role="tab" aria-selected="false">Selesai</button>
+                <form action="{{route('pesanan_selesai')}}" method="get" >
+                  <button class="nav-link {{Session::get('diselesai')}} rounded-5" id="dikembalikan" data-bs-toggle="tab" type="submit" role="tab" aria-selected="false">Selesai</button>
+                </form>
               </li>
               <li class="nav-item" role="presentation">
                 <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="selesai" type="button" role="tab" aria-selected="false">Batal</button>

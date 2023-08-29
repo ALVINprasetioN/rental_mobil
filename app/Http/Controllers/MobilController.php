@@ -24,17 +24,14 @@ class MobilController extends Controller
         $file = $request->file('file');
         $merek = $request->merek;   
         $warna = $request->warna;
-        $request->validate([
-            'file' => 'required'
-        ]);
-        $path = time()."-".$request->merek."-".$request->warna.".". $file->getClientOriginalExtension();
+        $path = time()."-".$merek."-".$warna."-".$file->getClientOriginalExtension();
         Storage::disk('local')->put('public/'.$path,file_get_contents($file));
-
         Mobil::create([
             'merek'=>$merek,
             'warna'=>$warna,
             'path'=>$path
         ]);
+        
         return Redirect::back();
     }
 
@@ -87,13 +84,16 @@ class MobilController extends Controller
             $denda->update([
                 'score' => $request->score
             ]);
-            $mbl = Mobil::find($request->mobil_id);
+            $mbl = Mobil::find($request->mobil_idd);
             $mbl->kondisi = 'disewakan' ;
             $mbl->save();
             $mbl = Sewa::find($request->sewa_id);
             $mbl->status = 2 ;
             $mbl->save();
         }else{
+            $mbl = Mobil::find($request->mobil_idd);
+            $mbl->kondisi = 'denda' ;
+            $mbl->save();
             $mbl1 = Denda::find($request->iddd);
             $mbl1->kerusakan = $request->kerusakan ;
             $mbl1->save();
@@ -103,11 +103,15 @@ class MobilController extends Controller
             $mbl3 = Denda::find($request->iddd);
             $mbl3->tot_denda =  $request->kerusakan +  $request->terlambat  ;
             $mbl3->save();
-            $mbl = Mobil::find($request->idd);
-            $mbl->kondisi = 'denda' ;
-            $mbl->save();
         }
         return Redirect()->route('admin_terima');
+    }
+    public function bayar_store(Request $request)
+    {
+        $mbl1 = Denda::find($request->denda_id);
+        $mbl1->status = 1 ;
+        $mbl1->save();
+        return Redirect()->back();
     }
 
     public function show(Mobil $mobil)
@@ -123,7 +127,7 @@ class MobilController extends Controller
          $siswas = Mobil::all();
         // $siswas = Mobil::paginate(2);
 
-        return view('index',['siswas'=>$siswas,'user' => $user,'id' => $id]);
+        return view('index',['siswas'=>$siswas,"mobill"=>$mobil,'user' => $user,'id' => $id]);
     }
     public function delete(Mobil $mobil)
     {

@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
 </head>
 <body>
 @extends('layouts.app2')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -16,7 +19,7 @@
                 <div class="card-header">{{ __('Create car') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('mobil_store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('mobil_store') }}" enctype="multipart/form-data" id="myFormm">
                         @csrf
 
                         <div class="row mb-3">
@@ -38,7 +41,7 @@
 
                             <div class="col-md-6">
                                 <input id="warna" type="warna" class="form-control @error('warna') is-invalid @enderror" name="warna" value="{{ old('warna') }}" required autocomplete="warna">
-
+                
                                 @error('warna')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -64,8 +67,8 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" onclick="crt()"class="btn btn-primary">
-                                    {{ __('Create') }}
+                                <button type="submit" class="btn btn-primary" id="success">
+                                        {{ __('Create') }}
                                 </button>
                             </div>
                         </div>
@@ -75,17 +78,36 @@
         </div>
     </div>
 </div>
-<script>
-function crt(){
-    const userConfirmation = confirm("Apakah Anda yakin ingin melanjutkan?");
-if (userConfirmation) {
-  // Pengguna memilih "OK"
-  console.log("Anda memilih OK");
-} else {
-  // Pengguna memilih "Batal"
-  console.log("Anda memilih Batal");
-}
-}
+@include('sweetalert::alert')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#myFormm').on('submit', function(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'apakah kamu yakin?',
+            text: "kamu ingin membahkan buku!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'yaa , tambahkan!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Success',
+                    'kamu berhasil menambahkan buku.',
+                    'success'
+                ).then(() => {
+                    // Perform form submission here
+                    // For demonstration purposes, let's just log the submission
+                    $(this).unbind('submit').submit();
+                });
+            }
+        });
+    });
+});
 </script>
 @endsection
 

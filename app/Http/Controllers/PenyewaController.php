@@ -8,6 +8,7 @@ use App\Models\Penyewa;
 use App\Models\Users;
 use App\Models\Sewa;
 use App\Models\Siswa;
+use App\Models\Denda;
 use App\Models\Mobil;
 use App\Models\Aktifitas;
 use App\Models\Aktivitas;
@@ -52,6 +53,8 @@ class PenyewaController extends Controller
         $request->session()->flash('waiting','active');
         $request->session()->forget('disewa');
         $request->session()->forget('dikembalikan');
+        $request->session()->forget('didenda');
+        $request->session()->forget('diselesai');
         return view('user_sewa',['sewa'=>$aktivitas,'id'=>$uid]);
     }
     public function pesanan_disewa(Request $request)
@@ -65,6 +68,8 @@ class PenyewaController extends Controller
         $request->session()->flash('disewa','active');
         $request->session()->forget('waiting');
         $request->session()->forget('dikembalikan');
+        $request->session()->forget('didenda');
+        $request->session()->forget('diselesai');
         return view('pesanan_disewa',['sewa'=>$aktivitas,'id'=>$uid]);
     }
     public function pesanan_dikembalikan(Request $request)
@@ -77,8 +82,38 @@ class PenyewaController extends Controller
         $uid = Auth::id();
         $request->session()->flash('dikembalikan','active');
         $request->session()->forget('waiting');
+        $request->session()->forget('didenda');
         $request->session()->forget('disewa');
+        $request->session()->forget('diselesai');
         return view('pesanan_dikembalikan',['sewa'=>$aktivitas,'id'=>$uid]);
+    }
+    public function pesanan_didenda(Request $request)
+    {
+        // $namess = Siswa::find($id)->name;
+        // $address = Siswa::find($id)->contact->address;
+        // $gurus = Siswa::find($id)->guru->name;
+        // $pelajar = Guru::find($id)->siswa;
+        $aktivitas = Denda::all();
+        $request->session()->flash('didenda','active');
+        $request->session()->forget('waiting');
+        $request->session()->forget('dikembalikan');
+        $request->session()->forget('disewa');
+        $request->session()->forget('diselesai');
+        return view('pesanan_didenda',['sewa'=>$aktivitas]);
+    }
+    public function pesanan_diselesai(Request $request)
+    {
+        // $namess = Siswa::find($id)->name;
+        // $address = Siswa::find($id)->contact->address;
+        // $gurus = Siswa::find($id)->guru->name;
+        // $pelajar = Guru::find($id)->siswa;
+        $aktivitas = Denda::all();
+        $request->session()->flash('diselesai','active');
+        $request->session()->forget('waiting');
+        $request->session()->forget('didenda');
+        $request->session()->forget('disewa');
+        $request->session()->forget('dikembalikan');
+        return view('pesanan_selesai',['sewa'=>$aktivitas]);
     }
 
 
@@ -97,15 +132,13 @@ class PenyewaController extends Controller
 
     public function denda(Request $request)
     {
-        $aktivitas = Users::all();
-        $aktivitass = Mobil::all();
-        $aktivitasss = Sewa::all();
+        $aktivitas = Denda::all();
         $request->session()->flash('denda','active');
         $request->session()->forget('disewa');
         $request->session()->forget('bokingan');
         $request->session()->forget('terima');
         $request->session()->forget('selesai');
-        return view('denda',['sewa'=>$aktivitas,'mobil'=>$aktivitass,'sewas'=>$aktivitasss]);
+        return view('denda',['sewa'=>$aktivitas]);
     }
     public function tersewa(Request $request)
     {
@@ -129,13 +162,13 @@ class PenyewaController extends Controller
     }
     public function selesai(Request $request)
     {
-        $user = Users::all();
+        $user = Denda::all();
         $request->session()->flash('selesai','active');
         $request->session()->forget('bokingan');
         $request->session()->forget('disewa');
         $request->session()->forget('denda');
         $request->session()->forget('terima');
-        return view('selesai',['sewa'=>$user]);
+        return view('selesai',['sewaa'=>$user]);
     }
 
     public function show()
@@ -148,5 +181,10 @@ class PenyewaController extends Controller
     
     return view('show',['siswaaa'=>$aktivitas]);
     }
-
+    public function ganti_password(){
+        return route('auth.password.email');
+    }
+    public function ganti_password_home(){
+        return view('ganti_password');
+    }
 }

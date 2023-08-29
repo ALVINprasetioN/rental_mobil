@@ -76,27 +76,28 @@ class SewaController extends Controller
         // $address = Siswa::find($id)->contact->address;
         // $gurus = Siswa::find($id)->guru->name;
         // $pelajar = Guru::find($id)->siswa;
-        $aktivitas = Sewa::find(1);
+        $aktivitas = Sewa::all();
         return view('admin_sewa',['siswaaa'=>$aktivitas]);
 
     }
     public function denda_form(Request $request)
     {
 
-        $denda = Denda::where('mobil_id', $request->idd)->get();
-        $dendahr = array();
-        foreach($denda as $dendaa)
-        {
-            $dendahr[] = $dendaa->keterlambatan; 
-        }
-        return view('denda_form',['denda'=>$denda ]);
+        $sewa = Sewa::find($request->iddd);
+        return view('denda_form',['sewa'=>$sewa]);
     }
     public function denda_lunas(Request $request)
     {
         # 0/null = belum terbayar / 1 = sudah terbayar
         $denda_lunas = Denda::find($request->id_denda);
-        $denda_lunas->status = 1 ;
-        $demda_lunas->save();
+        $denda_lunas->status = 2 ;
+        $denda_lunas->save();
+        $denda_sewa = Sewa::find($request->id_sewa);
+        $denda_sewa->status = 2 ;
+        $denda_sewa->save();
+        $denda_mobil = Mobil::find($request->id_mobil);
+        $denda_mobil->kondisi = "disewakan" ;
+        $denda_mobil->save();
         return Redirect()->back();  
     }
 }

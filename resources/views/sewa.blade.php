@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,7 +109,7 @@
                             <label for="tanggal_end" class="col-md-4 col-form-label text-md-end">{{ __('Tanggal selesai') }}</label>
 
                             <div class="col-md-6">
-                                <input id="tanggal_end" type="date" class="form-control datepicker @error('tanggal_end') is-invalid @enderror" name="tanggal_end" value="{{ old('tanggal_end') }}" required autocomplete="tanggal_end">
+                                <input id="tanggal_end" type="date" min="<?php echo date("Y-m-d".strtotime('+1 days')); ?>" class="form-control datepicker @error('tanggal_end') is-invalid @enderror" name="tanggal_end" value="{{ old('tanggal_end') }}" required autocomplete="tanggal_end">
 
                                 @error('tanggal_end')
                                     <span class="invalid-feedback" role="alert">
